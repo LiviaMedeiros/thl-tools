@@ -235,7 +235,7 @@ impl MBEFile {
         Self::parse(&mut OffsetReadWrapper::new(&mut file))
     }
 
-    pub fn rows(&self) -> RowIterator {
+    pub fn rows(&self) -> RowIterator<'_> {
         RowIterator {
             file: self,
             sheet: 0,
@@ -503,7 +503,7 @@ pub struct ColumnSelectioner<'a> {
     file: &'a MBEFile,
 }
 
-fn cell_to_public(cell: TableCell, data: &[(u32, ByteString)]) -> PublicTableCell {
+fn cell_to_public(cell: TableCell, data: &[(u32, ByteString)]) -> PublicTableCell<'_> {
     match cell {
         TableCell::Float(x) => PublicTableCell::Float(x),
         TableCell::Int(x) => PublicTableCell::Int(x),
